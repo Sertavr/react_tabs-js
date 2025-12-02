@@ -1,27 +1,35 @@
-export const Tabs = ({ currentTab, tabs, onTabSelected }) => {
+export const Tabs = ({ activeTabId, tabs, onTabSelected }) => {
   return (
-    <ul>
-      {tabs.map(tab => (
-        <li
-          className={currentTab === tab.title.at(-1) ? 'is-active' : ''}
-          data-cy="Tab"
-          key={tab.id}
-        >
-          <a
-            onClick={() => {
-              if (currentTab === tab.title.at(-1)) {
-                return;
-              }
+    <div data-cy="TabsComponent">
+      <div className="tabs is-boxed">
+        <ul>
+          {tabs.map(tab => (
+            <li
+              className={activeTabId === tab.id ? 'is-active' : ''}
+              data-cy="Tab"
+              key={tab.id}
+            >
+              <a
+                onClick={() => {
+                  if (activeTabId === tab.id) {
+                    return;
+                  }
 
-              onTabSelected(`${tab.title.at(-1)}`);
-            }}
-            href={`#${tab.id}`}
-            data-cy="TabLink"
-          >
-            {tab.title}
-          </a>
-        </li>
-      ))}
-    </ul>
+                  onTabSelected(tab.id);
+                }}
+                href={`#${tab.id}`}
+                data-cy="TabLink"
+              >
+                {tab.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="block" data-cy="TabContent">
+        {tabs.find(tab => tab.id === activeTabId).content}
+      </div>
+    </div>
   );
 };

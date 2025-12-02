@@ -6,28 +6,26 @@ import { Tabs } from './components/Tabs/Tabs';
 import { tabs } from './constants/constans';
 
 export const App = () => {
-  const [currentTab, setCurrenTab] = useState(1);
+  const [activeTabId, setCurrenTab] = useState('tab-1');
   const handletClick = value => {
-    setCurrenTab(value);
+    if (tabs.some(tab => tab.id === value)) {
+      setCurrenTab(value);
+    } else {
+      setCurrenTab('tab-1');
+    }
   };
 
   return (
     <div className="section">
-      <h1 className="title">Selected tab is Tab {currentTab}</h1>
+      <h1 className="title">
+        Selected tab is {tabs.find(tab => tab.id === activeTabId).title}
+      </h1>
 
-      <div data-cy="TabsComponent">
-        <div className="tabs is-boxed">
-          <Tabs
-            currentTab={currentTab}
-            tabs={tabs}
-            onTabSelected={handletClick}
-          />
-        </div>
-
-        <div className="block" data-cy="TabContent">
-          Some text {currentTab}
-        </div>
-      </div>
+      <Tabs
+        activeTabId={activeTabId}
+        tabs={tabs}
+        onTabSelected={handletClick}
+      />
     </div>
   );
 };
