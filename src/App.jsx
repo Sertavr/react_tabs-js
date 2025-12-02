@@ -15,11 +15,13 @@ export const App = () => {
     }
   };
 
+  const currentTab = tabs.some(tab => tab.id === activeTabId)
+    ? tabs.find(tab => tab.id === activeTabId).title
+    : tabs[0].title;
+
   return (
     <div className="section">
-      <h1 className="title">
-        Selected tab is {tabs.find(tab => tab.id === activeTabId).title}
-      </h1>
+      <h1 className="title">Selected tab is {currentTab}</h1>
 
       <Tabs
         activeTabId={activeTabId}
